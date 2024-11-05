@@ -1,34 +1,41 @@
 package io.taraxacum.finaltech;
 
-import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
-import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
-import io.taraxacum.common.util.StringNumberUtil;
-import io.taraxacum.finaltech.core.patch.EnergyRegulatorBlockTicker;
-import io.taraxacum.finaltech.setup.TemplateParser;
-import io.taraxacum.finaltech.setup.Updater;
-import io.taraxacum.finaltech.util.ConstantTableUtil;
-import io.taraxacum.libs.plugin.dto.ConfigFileManager;
-import io.taraxacum.libs.plugin.dto.*;
-import io.taraxacum.finaltech.setup.FinalTechItemStacks;
-import io.taraxacum.finaltech.setup.SetupUtil;
-import io.taraxacum.libs.slimefun.dto.ItemValueTable;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Logger;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.AdvancedPie;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.*;
-import java.util.concurrent.ExecutionException;
-import java.util.logging.Logger;
+import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.taraxacum.common.util.StringNumberUtil;
+import io.taraxacum.finaltech.core.patch.EnergyRegulatorBlockTicker;
+import io.taraxacum.finaltech.setup.FinalTechItemStacks;
+import io.taraxacum.finaltech.setup.SetupUtil;
+import io.taraxacum.finaltech.setup.Updater;
+import io.taraxacum.finaltech.util.ConstantTableUtil;
+import io.taraxacum.libs.plugin.dto.ConfigFileManager;
+import io.taraxacum.libs.plugin.dto.CustomLogger;
+import io.taraxacum.libs.plugin.dto.LanguageManager;
+import io.taraxacum.libs.plugin.dto.ServerRunnableLockFactory;
+import io.taraxacum.libs.slimefun.dto.ItemValueTable;
 
 /**
  * @author Final_ROOT
@@ -315,13 +322,14 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
         if (this.bukkitTask != null) {
             this.bukkitTask.cancel();
         }
-        BlockStorage.saveChunks();
+        //BlockStorage.saveChunks();
         try {
             FinalTech.logger().info("Waiting all task to end.(" + FinalTech.getLocationRunnableFactory().taskSize() + ")");
             FinalTech.getLocationRunnableFactory().waitAllTask();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
-        } finally {
+        }
+        /*finally {
             BlockStorage.saveChunks();
             try {
                 for (World world : Bukkit.getWorlds()) {
@@ -335,11 +343,13 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
                 e.printStackTrace();
             }
         }
+        */
         try {
             FinalTech.getEntityRunnableFactory().waitAllTask();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
-        } finally {
+        }
+        /*finally {
             BlockStorage.saveChunks();
             try {
                 for (World world : Bukkit.getWorlds()) {
@@ -353,6 +363,7 @@ public class FinalTech extends JavaPlugin implements SlimefunAddon {
                 e.printStackTrace();
             }
         }
+        */
     }
 
     @Override

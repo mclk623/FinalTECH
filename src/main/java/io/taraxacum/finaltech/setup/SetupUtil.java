@@ -116,7 +116,6 @@ public final class SetupUtil {
     private static void setupEnchantment() {
         try {
             ReflectionUtil.setStaticValue(Enchantment.class, "acceptingNew", true);
-            Enchantment.registerEnchantment(NullEnchantment.ENCHANTMENT);
 
 
             // material
@@ -180,9 +179,9 @@ public final class SetupUtil {
 
     public static void setupItem() {
         ItemStackUtil.setLore(FinalTechItemStacks.TROPHY_MEAWERFUL,
-                "§fThanks for some good idea");
+                "§f欢迎提供好的想法");
         ItemStackUtil.setLore(FinalTechItemStacks.TROPHY_SHIXINZIA,
-                "§fThanks for some test work");
+                "§f感谢您的测试工作");
 
         ItemStackUtil.addItemFlag(FinalTechItemStacks.STORAGE_CARD, ItemFlag.HIDE_ATTRIBUTES);
 

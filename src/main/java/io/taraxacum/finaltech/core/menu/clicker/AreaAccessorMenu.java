@@ -22,6 +22,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
+
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -101,8 +103,8 @@ public class AreaAccessorMenu extends AbstractClickerMenu {
         if (world == null) {
             return;
         }
-        BlockStorage storage = BlockStorage.getStorage(world);
-        if (storage == null) {
+        var blockData = StorageCacheUtils.getBlock(location);
+        if (blockData == null) {
             return;
         }
 
@@ -121,7 +123,8 @@ public class AreaAccessorMenu extends AbstractClickerMenu {
                 tempLocation.setY(y);
                 for (int z = minZ; z <= maxZ; z++) {
                     tempLocation.setZ(z);
-                    if (BlockStorage.hasBlockInfo(tempLocation) && storage.hasInventory(tempLocation)) {
+                    
+                    if (StorageCacheUtils.hasBlock(tempLocation) && StorageCacheUtils.getMenu(tempLocation) != null) {
                         int distance = Math.abs(tempLocation.getBlockX() - location.getBlockX()) + Math.abs(tempLocation.getBlockY() - location.getBlockY()) + Math.abs(tempLocation.getBlockZ() - location.getBlockZ());
                         List<Location> locationList = distanceLocationMap.computeIfAbsent(distance, d -> new ArrayList<>(d * d * 4 + 2));
                         locationList.add(tempLocation.clone());

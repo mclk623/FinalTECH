@@ -16,10 +16,11 @@ import javax.annotation.Nonnull;
  * @since 1.0
  */
 public class NullEnchantment extends Enchantment {
-    public static final Enchantment ENCHANTMENT = new NullEnchantment(new NamespacedKey(JavaPlugin.getPlugin(FinalTech.class), "FINALTECH_NULL_ENCHANTMENT"));
+	public static final NamespacedKey KEY = new NamespacedKey(JavaPlugin.getPlugin(FinalTech.class), "FINALTECH_NULL_ENCHANTMENT");
+    public static final Enchantment ENCHANTMENT = new NullEnchantment(KEY);
 
     private NullEnchantment(NamespacedKey key) {
-        super(key);
+        super();
     }
 
     @Nonnull
@@ -68,4 +69,14 @@ public class NullEnchantment extends Enchantment {
         item.addUnsafeEnchantment(ENCHANTMENT, 0);
         ItemStackUtil.addItemFlag(item, ItemFlag.HIDE_ENCHANTS);
     }
+
+	@Override
+	public NamespacedKey getKey() {
+		return KEY;
+	}
+
+	@Override
+	public String getTranslationKey() {
+		return "";
+	}
 }

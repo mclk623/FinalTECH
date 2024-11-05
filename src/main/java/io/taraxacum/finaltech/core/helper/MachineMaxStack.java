@@ -7,11 +7,13 @@ import io.taraxacum.libs.slimefun.dto.BlockStorageHelper;
 import io.taraxacum.libs.slimefun.dto.BlockStorageLoreHelper;
 import io.taraxacum.finaltech.core.item.machine.AbstractMachine;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import com.xzavier0722.mc.plugin.slimefun4.storage.controller.SlimefunBlockData;
+import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -69,7 +71,8 @@ public final class MachineMaxStack {
         public ChestMenu.MenuClickHandler getHandler(@Nonnull Inventory inventory, @Nonnull Location location, @Nonnull SlimefunItem slimefunItem, int slot) {
             if (slimefunItem instanceof AbstractMachine) {
                 return (player, i, itemStack, clickAction) -> {
-                    int quantity = Integer.parseInt(BlockStorage.getLocationInfo(location, MachineMaxStack.KEY));
+                	SlimefunBlockData blockData = StorageCacheUtils.getBlock(location);
+                    int quantity = Integer.parseInt(blockData.getData(MachineMaxStack.KEY));
                     if (clickAction.isShiftClicked()) {
                         quantity = 0;
                     } else {
@@ -80,7 +83,7 @@ public final class MachineMaxStack {
                         }
                     }
                     MachineMaxStack.HELPER.setIcon(inventory.getItem(slot), String.valueOf(quantity));
-                    BlockStorage.addBlockInfo(location, MachineMaxStack.KEY, String.valueOf(quantity));
+                    blockData.setData(MachineMaxStack.KEY, String.valueOf(quantity));
                     return false;
                 };
             } else {

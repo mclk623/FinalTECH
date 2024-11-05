@@ -96,7 +96,7 @@ public class EnergyRegulatorBlockTicker extends BlockTicker implements MenuUpdat
             }
         } else {
             energyNetwork.markDirty(location);
-            energyNetwork.tick(block);
+            energyNetwork.tick();
         }
     }
 }

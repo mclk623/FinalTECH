@@ -19,7 +19,6 @@ import io.taraxacum.finaltech.util.ConfigUtil;
 import io.taraxacum.finaltech.util.RecipeUtil;
 import io.taraxacum.finaltech.util.MachineUtil;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
-import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -31,6 +30,8 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -55,8 +56,8 @@ public class StorageInteractPort extends AbstractCargo implements RecipeItem {
     @Override
     protected void tick(Block block, @Nonnull SlimefunItem slimefunItem, @Nonnull Config config) {
         Block targetBlock = block.getRelative(BlockFace.UP);
-        BlockMenu blockMenu = BlockStorage.getInventory(block);
-        if (!BlockStorage.hasInventory(targetBlock)) {
+        BlockMenu blockMenu = StorageCacheUtils.getMenu(block.getLocation());
+        if (StorageCacheUtils.getMenu(targetBlock.getLocation()) != null) {
             if (Bukkit.isPrimaryThread()) {
                 BlockState blockState = targetBlock.getState();
                 if (blockState instanceof InventoryHolder) {
